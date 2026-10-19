@@ -2,12 +2,16 @@
 name: Jaimie Baird
 medium: ceramics & video
 order: 4
+keyWork: ../../assets/media/jaimie-vessels.jpg
+keyWorkPosition: 50% 62%
 portrait: ../../assets/media/group-2.jpg
 portraitPosition: 56% 35%
 portraitSize: 900% auto
 work:
   - title: Vessels
-    meta: photo needed
+    meta: stoneware and terracotta, 2026
+    image: ../../assets/media/jaimie-vessels.jpg
+    position: 50% 62%
   - title: Video
     meta: link needed
     type: video
