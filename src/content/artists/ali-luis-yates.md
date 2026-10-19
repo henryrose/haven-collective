@@ -1,6 +1,6 @@
 ---
 name: Ali Luis Yates
-medium: medium tbd
+medium: fiber arts
 order: 6
 keyWork: ../../assets/media/ali-1.jpg
 keyWorkPosition: center

@@ -3,7 +3,7 @@ import { url } from '../../lib/url';
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import EventMosaic from '../../components/EventMosaic.astro';
-import { formatDateRange, formatLongDate, getEventsByStatus } from '../../lib/events';
+import { formatDateRange, formatLongDate, getEventsByStatus, shortAddress } from '../../lib/events';
 import { paragraphs } from '../../lib/text';
 
 const { upcoming, past } = await getEventsByStatus();
@@ -62,7 +62,7 @@ const { upcoming, past } = await getEventsByStatus();
               <div class="meta">{formatDateRange(e.data.startDate, e.data.endDate)}</div>
               <div class="row-title">{e.data.title}</div>
               <div class="venue">
-                {e.data.venue} · {e.data.address.replace(/,\s*[A-Z]{2}$/, '')}
+                {e.data.venue} · {shortAddress(e.data.address)}
               </div>
               <span class="text-link see">See the show →</span>
             </div>

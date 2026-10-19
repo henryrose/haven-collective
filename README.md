@@ -45,4 +45,4 @@ Image paths in content are relative to the content file (for example `../../asse
 
 All six page templates are built: Home, Artists index, Artist page, Events index, Event page (upcoming and past variants), About.
 
-Content still needed from the artists: Ali's statement and medium, headshots (portraits currently crop the group photo), and Jaimie's video link.
+Content still needed from the artists: Ali's statement, headshots (portraits currently crop the group photo), and Jaimie's video link.

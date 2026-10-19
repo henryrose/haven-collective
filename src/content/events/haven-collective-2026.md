@@ -3,8 +3,8 @@ title: Haven Collective
 startDate: 2026-11-07
 endDate: 2026-11-07
 venue: Black Cat Pilates
-address: Port Townsend, WA
-mapUrl: https://www.google.com/maps/search/?api=1&query=Black+Cat+Pilates+Port+Townsend+WA
+address: 1030 Lawrence St, Port Townsend, WA
+mapUrl: https://www.google.com/maps/search/?api=1&query=1030+Lawrence+St+Port+Townsend+WA
 reception: Opening reception · Saturday, November 7 · 5–8pm
 poster: ../../assets/media/haven-collective-2026-poster.png
 artists:

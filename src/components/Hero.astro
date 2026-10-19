@@ -2,7 +2,7 @@
 import { url } from '../lib/url';
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
-import { formatDateRange, type EventEntry } from '../lib/events';
+import { formatDateRange, shortAddress, type EventEntry } from '../lib/events';
 
 interface Props {
   hero: CollectionEntry<'site'>['data']['home']['hero'];
@@ -16,7 +16,7 @@ const dateLine = show
     ? `Opens ${formatDateRange(show.data.startDate, show.data.endDate)}`
     : formatDateRange(show.data.startDate, show.data.endDate)
   : '';
-const venueLine = show ? `${show.data.venue} · ${show.data.address.replace(/,\s*WA$/, '')}` : '';
+const venueLine = show ? `${show.data.venue} · ${shortAddress(show.data.address)}` : '';
 ---
 
 <section class="hero" data-hero>

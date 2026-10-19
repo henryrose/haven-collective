@@ -59,8 +59,10 @@ export function mosaicImages(event: EventEntry) {
   return pool.filter((p) => !seen.has(p.image.src) && seen.add(p.image.src)).slice(0, 3);
 }
 
-/** "Port Townsend" from "Port Townsend, WA" for compact venue lines. */
+/** City only, for compact venue lines: "1030 Lawrence St, Port Townsend, WA" → "Port Townsend". */
 export function shortAddress(address: string): string {
+  const parts = address.split(',').map((s) => s.trim());
+  if (parts.length >= 3) return parts[parts.length - 2]!;
   return address.replace(/,\s*[A-Z]{2}$/, '');
 }
 
