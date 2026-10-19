@@ -1,14 +1,14 @@
 ---
-import { Image } from 'astro:assets';
-import { formatDateRange, mosaicImages, type EventEntry } from '../lib/events';
+import EventMosaic from './EventMosaic.astro';
+import { formatDateRange, shortAddress, type EventEntry } from '../lib/events';
+import { paragraphs } from '../lib/text';
 
 interface Props {
   show: EventEntry;
 }
 
 const { show } = Astro.props;
-const [tall, ...small] = mosaicImages(show);
-const blurb = show.body?.split(/\n\s*\n/).filter(Boolean).at(-1)?.trim() ?? '';
+const blurb = paragraphs(show.body).at(-1) ?? '';
 ---
 
 <section class="section">
@@ -18,26 +18,11 @@ const blurb = show.body?.split(/\n\s*\n/).filter(Boolean).at(-1)?.trim() ?? '';
   </div>
   <div class="container">
     <a href={`/events/${show.id}`} class="feature">
-      <div class="mosaic">
-        {
-          tall && (
-            <div class="cell tall">
-              <Image src={tall.image} alt="" widths={[480, 800, 1200]} sizes="(min-width: 760px) 40vw, 60vw" style={`object-position: ${tall.position}`} />
-            </div>
-          )
-        }
-        {
-          small.map((p) => (
-            <div class="cell">
-              <Image src={p.image} alt="" widths={[320, 640]} sizes="(min-width: 760px) 26vw, 40vw" style={`object-position: ${p.position}`} />
-            </div>
-          ))
-        }
-      </div>
+      <EventMosaic event={show} class="mosaic" />
       <div class="card">
         <div class="label date">{formatDateRange(show.data.startDate, show.data.endDate)}</div>
         <div class="title">{show.data.title}</div>
-        <div class="venue">{show.data.venue} · {show.data.address.replace(/,\s*WA$/, '')}</div>
+        <div class="venue">{show.data.venue} · {shortAddress(show.data.address)}</div>
         <p class="blurb">{blurb}</p>
         <span class="text-link see">See the show →</span>
       </div>
@@ -58,32 +43,11 @@ const blurb = show.body?.split(/\n\s*\n/).filter(Boolean).at(-1)?.trim() ?? '';
   .feature:hover {
     color: var(--ink);
   }
-  .mosaic {
-    display: grid;
-    grid-template-columns: 3fr 2fr;
-    grid-auto-rows: minmax(120px, 22vw);
-    gap: 10px;
-  }
   /* At six-column widths the mosaic takes two of the three columns. */
   @container (min-width: 760px) {
     .mosaic {
       grid-column: span 2;
     }
-  }
-  .cell {
-    position: relative;
-    overflow: hidden;
-    background: var(--placeholder);
-  }
-  .cell.tall {
-    grid-row: span 2;
-  }
-  .cell img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
   }
   .card {
     background: var(--paper);

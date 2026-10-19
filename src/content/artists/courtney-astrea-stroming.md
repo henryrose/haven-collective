@@ -6,6 +6,7 @@ keyWork: ../../assets/media/install-plinth.jpg
 keyWorkPosition: center 45%
 portrait: ../../assets/media/group-2.jpg
 portraitPosition: 36% 38%
+portraitSize: 900% auto
 work:
   - title: Protea Pelvis
     meta: ceramic, dried protea, 2026

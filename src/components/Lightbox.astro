@@ -1,0 +1,137 @@
+---
+/**
+ * Lightbox for work photos. Opens from any `[data-work]` button on the page,
+ * shows the uncropped image with title and meta, supports prev/next and Esc.
+ */
+---
+
+<dialog class="lightbox" data-lightbox aria-label="Work">
+  <button type="button" class="close" data-close aria-label="Close">×</button>
+  <button type="button" class="nav prev" data-prev aria-label="Previous work">←</button>
+  <figure>
+    <img alt="" data-img />
+    <figcaption>
+      <span class="title" data-title></span>
+      <span class="meta" data-meta></span>
+    </figcaption>
+  </figure>
+  <button type="button" class="nav next" data-next aria-label="Next work">→</button>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox]');
+  const items = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-work]'));
+
+  if (dialog && items.length) {
+    const img = dialog.querySelector<HTMLImageElement>('[data-img]')!;
+    const title = dialog.querySelector<HTMLElement>('[data-title]')!;
+    const meta = dialog.querySelector<HTMLElement>('[data-meta]')!;
+    let current = 0;
+
+    const show = (i: number) => {
+      current = (i + items.length) % items.length;
+      const el = items[current];
+      img.src = el.dataset.full ?? '';
+      img.width = Number(el.dataset.width) || 0;
+      img.height = Number(el.dataset.height) || 0;
+      img.alt = el.dataset.title ?? '';
+      title.textContent = el.dataset.title ?? '';
+      meta.textContent = el.dataset.meta ?? '';
+    };
+
+    items.forEach((el, i) =>
+      el.addEventListener('click', () => {
+        show(i);
+        dialog.showModal();
+      }),
+    );
+    dialog.querySelector('[data-prev]')?.addEventListener('click', () => show(current - 1));
+    dialog.querySelector('[data-next]')?.addEventListener('click', () => show(current + 1));
+    dialog.querySelector('[data-close]')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+    dialog.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') show(current - 1);
+      if (e.key === 'ArrowRight') show(current + 1);
+    });
+    dialog.addEventListener('close', () => items[current]?.focus());
+    if (items.length < 2) dialog.classList.add('single');
+  }
+</script>
+
+<style>
+  .lightbox {
+    border: 0;
+    padding: 0;
+    margin: auto;
+    max-width: min(96vw, 1400px);
+    max-height: 96vh;
+    width: fit-content;
+    background: transparent;
+    color: var(--paper);
+    overflow: visible;
+  }
+  .lightbox::backdrop {
+    background: rgba(43, 37, 33, 0.92);
+  }
+  figure {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+  img {
+    max-width: min(96vw, 1400px);
+    max-height: calc(96vh - 60px);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+  figcaption {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  figcaption .title {
+    font-weight: 700;
+    font-size: 15px;
+  }
+  figcaption .meta {
+    color: var(--hairline);
+  }
+  button {
+    position: fixed;
+    border: 0;
+    background: transparent;
+    color: var(--paper);
+    font: inherit;
+    font-size: 28px;
+    line-height: 1;
+    padding: 12px;
+    cursor: pointer;
+  }
+  button:hover {
+    color: var(--clay);
+  }
+  .close {
+    top: 12px;
+    right: 16px;
+  }
+  .nav {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .prev {
+    left: 8px;
+  }
+  .next {
+    right: 8px;
+  }
+  .single .nav {
+    display: none;
+  }
+</style>

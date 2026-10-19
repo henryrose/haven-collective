@@ -30,12 +30,15 @@ Image paths in content are relative to the content file (for example `../../asse
 ## Layout
 
 - `src/layouts/Base.astro` — document shell, self-hosted fonts (Karla, Courier Prime), header and footer
-- `src/components/` — Home page sections: `Hero` (scroll parallax, disabled under reduced motion), `Statement`, `ArtistGrid`, `PastShows`
-- `src/lib/events.ts` — upcoming/past split, date formatting, mosaic image selection
+- `src/pages/` — Home, `artists/` (index + `[slug]`), `events/` (index + `[slug]` + `[slug].ics` calendar file), `about`
+- `src/components/` — `Hero` (scroll parallax, disabled under reduced motion), `Statement`, `ArtistGrid`, `PastShows`, `EventMosaic`, `Lightbox` (uncropped work photos, prev/next, Esc)
+- `src/lib/events.ts` — upcoming/past split, date formatting, mosaic image selection; `src/lib/text.ts` — paragraph and excerpt helpers
 - `src/styles/global.css` — design tokens from the handoff
 
 ## Design reference
 
 `design_handoff_haven_collective_site/` holds the handoff README, HTML design references for every page, seed data, and web-sized media. `context/` holds the original photos and show wording.
 
-Pages built so far: Home. Still to build: Artists index, Artist page, Events index, Event page, About.
+All six page templates are built: Home, Artists index, Artist page, Events index, Event page (upcoming and past variants), About.
+
+Content still needed from the artists: key work photos for Jaimie Baird and Ali Luis Yates, Ali's statement and medium, headshots (portraits currently crop the group photo), a poster for the Nov 7 show (`poster` and `posterPdf` on the event), and Jaimie's video link.

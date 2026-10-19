@@ -6,6 +6,7 @@ keyWork: ../../assets/media/sarah-hand.jpg
 keyWorkPosition: center
 portrait: ../../assets/media/group-2.jpg
 portraitPosition: 47% 36%
+portraitSize: 900% auto
 work:
   - title: Untitled (hand)
     meta: silver gelatin print, 2026

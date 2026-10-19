@@ -4,6 +4,7 @@ startDate: 2026-11-07
 endDate: 2026-11-07
 venue: Black Cat Pilates
 address: Port Townsend, WA
+mapUrl: https://www.google.com/maps/search/?api=1&query=Black+Cat+Pilates+Port+Townsend+WA
 reception: Opening reception · Saturday, November 7 · 5–8pm
 artists:
   - amanda-rose

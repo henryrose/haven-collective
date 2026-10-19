@@ -4,6 +4,7 @@ startDate: 2026-08-22
 endDate: 2026-08-23
 venue: Baird Studio
 address: Port Townsend, WA
+mapUrl: https://www.google.com/maps/search/?api=1&query=Baird+Studio+Port+Townsend+WA
 reception: Opening reception · Friday, August 22 · 5–8pm
 hero:
   image: ../../assets/media/install-quilt-wall.jpg

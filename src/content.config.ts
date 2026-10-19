@@ -19,6 +19,8 @@ const artists = defineCollection({
       /** Optional headshot. May be a crop of a group photo until headshots exist. */
       portrait: image().optional(),
       portraitPosition: cssPosition,
+      /** CSS background-size for the portrait, e.g. "900% auto" to zoom into a group photo. */
+      portraitSize: z.string().default('cover'),
       work: z
         .array(
           z.object({
@@ -30,7 +32,7 @@ const artists = defineCollection({
             position: cssPosition,
             /** Optional CSS background-size override for crops pulled from a wider shot. */
             size: z.string().optional(),
-            video: z.string().url().optional(),
+            video: z.url().optional(),
           }),
         )
         .default([]),
@@ -46,10 +48,12 @@ const events = defineCollection({
       endDate: z.coerce.date(),
       venue: z.string(),
       address: z.string(),
-      mapUrl: z.string().url().optional(),
+      mapUrl: z.url().optional(),
       /** e.g. "Opening reception · Saturday, November 7 · 5–8pm" */
       reception: z.string().optional(),
       poster: image().optional(),
+      /** Path under public/, e.g. "/posters/haven-collective-2026.pdf". */
+      posterPdf: z.string().optional(),
       /** Path under public/, e.g. "/press/haven-collective-2026.pdf". */
       pressRelease: z.string().optional(),
       /** Hero band for past shows. */
@@ -77,7 +81,7 @@ const site = defineCollection({
       name: z.string(),
       location: z.string(),
       tagline: z.string(),
-      contactEmail: z.string().email(),
+      contactEmail: z.email(),
       contactNote: z.string(),
       statement: z.array(z.string()).min(1),
       home: z.object({
@@ -85,6 +89,10 @@ const site = defineCollection({
         sub: z.string(),
         hero: z.object({ image: image(), position: cssPosition, caption: z.string() }),
       }),
+      about: z.object({
+        hero: z.object({ image: image(), position: cssPosition, caption: z.string() }),
+      }),
+      artistsIntro: z.string(),
     }),
 });
 

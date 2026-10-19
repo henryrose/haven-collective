@@ -6,6 +6,7 @@ keyWork: ../../assets/media/spoons.jpg
 keyWorkPosition: center
 portrait: ../../assets/media/group-2.jpg
 portraitPosition: 47% 36%
+portraitSize: 900% auto
 work:
   - title: Spoons
     meta: unfired clay, 2026

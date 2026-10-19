@@ -1,0 +1,134 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, getEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { firstSentence } from '../../lib/text';
+
+const settings = (await getEntry('site', 'settings'))!.data;
+const artists = (await getCollection('artists')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base title="Artists">
+  <section class="title-row">
+    <h1 class="h1">Artists</h1>
+    <p class="intro">{settings.artistsIntro}</p>
+  </section>
+
+  <section class="grid-section">
+    <div class="grid-container">
+      <ul class="grid">
+        {
+          artists.map((artist) => (
+            <li>
+              <a href={`/artists/${artist.id}`} class="tile">
+                <div class="image">
+                  {artist.data.keyWork ? (
+                    <Image
+                      src={artist.data.keyWork}
+                      alt={`Work by ${artist.data.name}`}
+                      widths={[400, 640, 900]}
+                      sizes="(min-width: 760px) 33vw, (min-width: 440px) 50vw, 100vw"
+                      style={`object-position: ${artist.data.keyWorkPosition}`}
+                    />
+                  ) : (
+                    <div class="placeholder">key work photo</div>
+                  )}
+                </div>
+                <div class="text">
+                  <div class="name-row">
+                    <span class="name">{artist.data.name}</span>
+                    <span class="meta">{artist.data.medium}</span>
+                  </div>
+                  <p class="excerpt">{firstSentence(artist.body)}</p>
+                </div>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .title-row {
+    padding: clamp(40px, 6vw, 72px) var(--pad-x) clamp(24px, 3vw, 36px);
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .intro {
+    max-width: 460px;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .grid-section {
+    padding: 0 var(--pad-x) clamp(56px, 8vw, 96px);
+  }
+  .grid-container {
+    container-type: inline-size;
+  }
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(20px, 3vw, 40px) clamp(16px, 2.5vw, 32px);
+  }
+  @container (min-width: 440px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @container (min-width: 760px) {
+    .grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .tile {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .tile:hover {
+    color: var(--ink);
+  }
+  .image {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--placeholder);
+  }
+  .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .name-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .name {
+    font-weight: 800;
+    font-size: 22px;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .excerpt {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+</style>

@@ -17,5 +17,13 @@
       "position": "center 42%",
       "caption": "Mothers Makers, installed · Baird Studio, Aug 2026"
     }
-  }
+  },
+  "about": {
+    "hero": {
+      "image": "../../assets/media/group-2.jpg",
+      "position": "center 42%",
+      "caption": "Mothers Makers · Baird Studio · August 2026"
+    }
+  },
+  "artistsIntro": "Six practices that look different from one another, returning again and again to the same terrain."
 }

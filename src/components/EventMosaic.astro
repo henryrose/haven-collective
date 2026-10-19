@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import { mosaicImages, type EventEntry } from '../lib/events';
+
+interface Props {
+  event: EventEntry;
+  /** grid-auto-rows value */
+  rows?: string;
+  gap?: string;
+  class?: string;
+}
+
+const { event, rows = 'minmax(120px, 22vw)', gap = '10px', class: className } = Astro.props;
+const [tall, ...small] = mosaicImages(event);
+---
+
+<div class:list={['mosaic', className]} style={`--rows: ${rows}; --gap: ${gap}`}>
+  {
+    tall && (
+      <div class="cell tall">
+        <Image src={tall.image} alt="" widths={[480, 800, 1200]} sizes="(min-width: 760px) 40vw, 60vw" style={`object-position: ${tall.position}`} />
+      </div>
+    )
+  }
+  {
+    small.map((p) => (
+      <div class="cell">
+        <Image src={p.image} alt="" widths={[320, 640]} sizes="(min-width: 760px) 26vw, 40vw" style={`object-position: ${p.position}`} />
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .mosaic {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    grid-auto-rows: var(--rows);
+    gap: var(--gap);
+  }
+  .cell {
+    position: relative;
+    overflow: hidden;
+    background: var(--placeholder);
+  }
+  .cell.tall {
+    grid-row: span 2;
+  }
+  .cell img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>

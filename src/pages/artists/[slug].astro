@@ -1,0 +1,325 @@
+---
+import { Image, getImage } from 'astro:assets';
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Lightbox from '../../components/Lightbox.astro';
+import { formatDateRange, type EventEntry } from '../../lib/events';
+
+export async function getStaticPaths() {
+  const artists = (await getCollection('artists')).sort((a, b) => a.data.order - b.data.order);
+  return artists.map((artist, i) => ({
+    params: { slug: artist.id },
+    props: {
+      artist,
+      prev: artists[(i + artists.length - 1) % artists.length],
+      next: artists[(i + 1) % artists.length],
+    },
+  }));
+}
+
+const { artist, prev, next } = Astro.props;
+const { Content } = await render(artist);
+const data = artist.data;
+
+const portraitUrl = data.portrait ? (await getImage({ src: data.portrait, width: 640 })).src : null;
+
+// Work tiles: cropped thumbnail for the grid plus an uncropped image for the lightbox.
+const work = await Promise.all(
+  data.work.map(async (w) => {
+    if (!w.image) return { ...w, thumb: null, full: null };
+    const [thumb, full] = await Promise.all([
+      getImage({ src: w.image, width: 800 }),
+      getImage({ src: w.image, width: 1600 }),
+    ]);
+    return { ...w, thumb, full };
+  }),
+);
+
+const shows: EventEntry[] = (await getCollection('events'))
+  .filter((e) => e.data.artists.some((ref) => ref.id === artist.id))
+  .sort((a, b) => b.data.startDate.getTime() - a.data.startDate.getTime());
+const showThumb = (e: EventEntry) => e.data.hero ?? e.data.photos[0];
+---
+
+<Base title={data.name} description={`${data.name} — ${data.medium}. Member of Haven Collective, Port Townsend, WA.`}>
+  <section class="band">
+    {
+      data.keyWork ? (
+        <Image src={data.keyWork} alt="" widths={[640, 960, 1280, 1400]} sizes="100vw" priority style={`object-position: ${data.keyWorkPosition}`} />
+      ) : (
+        <div class="placeholder wide">key work, wide crop</div>
+      )
+    }
+  </section>
+
+  <section class="intro">
+    <div class="identity">
+      <a href="/artists" class="meta back">← All artists</a>
+      <div class="name-block">
+        <div
+          class="portrait"
+          style={portraitUrl ? `background-image: url(${portraitUrl}); background-position: ${data.portraitPosition}; background-size: ${data.portraitSize}` : undefined}
+        >
+        </div>
+        <div>
+          <h1>{data.name}</h1>
+          <div class="medium">{data.medium}</div>
+        </div>
+      </div>
+    </div>
+    <div class="bio">
+      <Content />
+    </div>
+  </section>
+
+  <section class="work">
+    <h2 class="h2">Work</h2>
+    <ul class="work-grid">
+      {
+        work.map((w, i) => {
+          const caption = (
+            <div class="caption">
+              <span class="title">{w.title}</span>
+              {w.meta && <span class="meta">{w.meta}</span>}
+            </div>
+          );
+          return (
+            <li>
+              {w.thumb && w.full ? (
+                <button
+                  type="button"
+                  class="work-item"
+                  data-work
+                  data-index={i}
+                  data-full={w.full.src}
+                  data-width={w.full.attributes.width}
+                  data-height={w.full.attributes.height}
+                  data-title={w.title}
+                  data-meta={w.meta ?? ''}
+                >
+                  <div
+                    class="image"
+                    style={`background-image: url(${w.thumb.src}); background-position: ${w.position}; background-size: ${w.size ?? 'cover'}`}
+                    role="img"
+                    aria-label={w.title}
+                  />
+                  {caption}
+                </button>
+              ) : w.video ? (
+                <a href={w.video} class="work-item" target="_blank" rel="noopener">
+                  <div class="image">
+                    <div class="placeholder">▶ video</div>
+                  </div>
+                  {caption}
+                </a>
+              ) : (
+                <div class="work-item">
+                  <div class="image">
+                    <div class="placeholder">{w.type === 'video' ? '▶ video embed' : 'work photo'}</div>
+                  </div>
+                  {caption}
+                </div>
+              )}
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+
+  {
+    shows.length > 0 && (
+      <section class="shows">
+        <h2 class="h2">In shows</h2>
+        {shows.map((e) => {
+          const thumb = showThumb(e);
+          return (
+            <a href={`/events/${e.id}`} class="show">
+              <div class="thumb">
+                {thumb && <Image src={thumb.image} alt="" width={240} height={160} style={`object-position: ${thumb.position}`} />}
+              </div>
+              <div>
+                <div class="show-title">{e.data.title}</div>
+                <div class="meta show-meta">
+                  {formatDateRange(e.data.startDate, e.data.endDate)} · {e.data.venue}
+                </div>
+              </div>
+            </a>
+          );
+        })}
+      </section>
+    )
+  }
+
+  <nav class="prev-next" aria-label="Other artists">
+    <a href={`/artists/${prev.id}`}>← {prev.data.name}</a>
+    <a href={`/artists/${next.id}`}>{next.data.name} →</a>
+  </nav>
+
+  <Lightbox />
+</Base>
+
+<style>
+  .band {
+    position: relative;
+    height: clamp(260px, 38vh, 440px);
+    overflow: hidden;
+    border-bottom: 1px solid var(--hairline);
+    background: var(--placeholder);
+  }
+  .band img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .placeholder.wide {
+    background: repeating-linear-gradient(45deg, var(--placeholder) 0 14px, var(--placeholder-stripe) 14px 28px);
+    font-size: 13px;
+  }
+
+  .intro,
+  .work,
+  .shows {
+    padding: clamp(36px, 5vw, 64px) var(--pad-x);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .intro {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: clamp(28px, 5vw, 72px);
+  }
+  .identity {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .back:hover {
+    color: var(--clay);
+  }
+  .name-block {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .portrait {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    flex: none;
+    background-color: var(--placeholder);
+    background-repeat: no-repeat;
+  }
+  h1 {
+    font-size: clamp(32px, 4.5vw, 52px);
+    line-height: 0.98;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .medium {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--clay);
+    margin-top: 8px;
+  }
+  .bio {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-width: 620px;
+    font-size: clamp(17px, 1.6vw, 20px);
+    line-height: 1.55;
+  }
+
+  .work .h2 {
+    margin-bottom: 24px;
+  }
+  .work-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+    gap: clamp(16px, 2.5vw, 28px);
+  }
+  .work-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+  }
+  button.work-item {
+    cursor: zoom-in;
+  }
+  button.work-item:focus-visible {
+    outline: 2px solid var(--clay);
+    outline-offset: 4px;
+  }
+  .work-item .image {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background-color: var(--placeholder);
+    background-repeat: no-repeat;
+  }
+  .caption {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: baseline;
+  }
+  .caption .title {
+    font-weight: 700;
+    font-size: 15px;
+  }
+  .caption .meta {
+    text-align: right;
+  }
+
+  .shows {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .show {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    max-width: 560px;
+  }
+  .thumb {
+    width: 120px;
+    height: 80px;
+    flex: none;
+    overflow: hidden;
+    background: var(--placeholder);
+  }
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .show-title {
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+  }
+  .show-meta {
+    margin-top: 4px;
+  }
+
+  .prev-next {
+    padding: 28px var(--pad-x);
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 15px;
+    font-weight: 700;
+  }
+</style>

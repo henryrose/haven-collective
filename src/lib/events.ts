@@ -58,3 +58,14 @@ export function mosaicImages(event: EventEntry) {
   const seen = new Set<string>();
   return pool.filter((p) => !seen.has(p.image.src) && seen.add(p.image.src)).slice(0, 3);
 }
+
+/** "Port Townsend" from "Port Townsend, WA" for compact venue lines. */
+export function shortAddress(address: string): string {
+  return address.replace(/,\s*[A-Z]{2}$/, '');
+}
+
+/** Events sorted oldest-first, for previous/next links. */
+export async function getEventsChronological() {
+  const all = await getCollection('events');
+  return all.sort((a, b) => a.data.startDate.getTime() - b.data.startDate.getTime());
+}

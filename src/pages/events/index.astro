@@ -1,0 +1,206 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import EventMosaic from '../../components/EventMosaic.astro';
+import { formatDateRange, formatLongDate, getEventsByStatus } from '../../lib/events';
+import { paragraphs } from '../../lib/text';
+
+const { upcoming, past } = await getEventsByStatus();
+---
+
+<Base title="Events">
+  <section class="title-row">
+    <h1 class="h1">Events</h1>
+  </section>
+
+  {
+    upcoming.length > 0 && (
+      <section class="upcoming">
+        <div class="label eyebrow clay">
+          <span class="dot" />
+          Upcoming
+        </div>
+        {upcoming.map((e) => (
+          <a href={`/events/${e.id}`} class="card">
+            <div class="poster">
+              {e.data.poster ? (
+                <Image src={e.data.poster} alt={`${e.data.title} poster`} widths={[360, 720]} sizes="(min-width: 760px) 360px, 100vw" />
+              ) : (
+                <div class="placeholder poster-placeholder">show poster</div>
+              )}
+            </div>
+            <div class="details">
+              <div class="title">{e.data.title}</div>
+              <div class="opens">Opens {formatLongDate(e.data.startDate)}</div>
+              <div class="venue">
+                {e.data.venue} · {e.data.address}
+                {e.data.reception && (
+                  <>
+                    <br />
+                    {e.data.reception}
+                  </>
+                )}
+              </div>
+              <p class="blurb">{paragraphs(e.body)[0]}</p>
+              <span class="button">Show details →</span>
+            </div>
+          </a>
+        ))}
+      </section>
+    )
+  }
+
+  {
+    past.length > 0 && (
+      <section class="past">
+        <div class="label eyebrow muted">Past</div>
+        {past.map((e) => (
+          <a href={`/events/${e.id}`} class="row">
+            <EventMosaic event={e} rows="minmax(100px, 16vw)" gap="8px" />
+            <div class="text">
+              <div class="meta">{formatDateRange(e.data.startDate, e.data.endDate)}</div>
+              <div class="row-title">{e.data.title}</div>
+              <div class="venue">
+                {e.data.venue} · {e.data.address.replace(/,\s*[A-Z]{2}$/, '')}
+              </div>
+              <span class="text-link see">See the show →</span>
+            </div>
+          </a>
+        ))}
+      </section>
+    )
+  }
+</Base>
+
+<style>
+  .title-row {
+    padding: clamp(40px, 6vw, 72px) var(--pad-x) clamp(24px, 3vw, 36px);
+  }
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .eyebrow.clay {
+    color: var(--clay);
+  }
+  .eyebrow.muted {
+    color: var(--muted);
+    padding-top: 28px;
+    border-top: 1px solid var(--hairline);
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .upcoming {
+    padding: 0 var(--pad-x) clamp(40px, 6vw, 64px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(20px, 3vw, 40px);
+  }
+  .upcoming .eyebrow {
+    margin-bottom: 0;
+  }
+  .card {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: clamp(20px, 3vw, 40px);
+    background: var(--paper);
+    padding: clamp(18px, 2.5vw, 28px);
+    box-shadow: 0 18px 40px -24px rgba(43, 37, 33, 0.4);
+  }
+  .card:hover {
+    color: var(--ink);
+  }
+  .card:hover .button {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .poster {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    max-width: 360px;
+    width: 100%;
+    background: var(--placeholder);
+  }
+  .poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .poster-placeholder {
+    background: repeating-linear-gradient(45deg, var(--placeholder) 0 14px, var(--placeholder-stripe) 14px 28px);
+    font-size: 13px;
+    padding: 16px;
+  }
+  .details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+  }
+  .title {
+    font-size: clamp(34px, 4.5vw, 56px);
+    line-height: 0.98;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .opens {
+    font-size: clamp(18px, 2vw, 22px);
+    line-height: 1.3;
+  }
+  .venue {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .blurb {
+    margin-top: 6px;
+    max-width: 480px;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+  .card .button {
+    align-self: flex-start;
+    margin-top: 10px;
+    padding: 10px 18px;
+  }
+
+  .past {
+    padding: 0 var(--pad-x) clamp(56px, 8vw, 96px);
+  }
+  .row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: clamp(20px, 3vw, 40px);
+    align-items: center;
+    padding: 8px 0;
+  }
+  .row:hover {
+    color: var(--ink);
+  }
+  .row + .row {
+    margin-top: clamp(24px, 4vw, 48px);
+  }
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .row-title {
+    font-size: clamp(28px, 3.5vw, 40px);
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .see {
+    align-self: flex-start;
+    margin-top: 8px;
+    font-size: 14px;
+  }
+</style>

@@ -1,0 +1,162 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, getEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const settings = (await getEntry('site', 'settings'))!.data;
+const artists = (await getCollection('artists')).sort((a, b) => a.data.order - b.data.order);
+const { hero } = settings.about;
+const statement = settings.statement;
+---
+
+<Base title="About" description={statement[0]}>
+  <section class="band">
+    <Image src={hero.image} alt="" widths={[640, 960, 1280, 1400]} sizes="100vw" priority style={`object-position: ${hero.position}`} />
+    <div class="caption">{hero.caption}</div>
+  </section>
+
+  <section class="about">
+    <div class="heading">
+      <h1 class="h1">About the collective</h1>
+      <div class="sub">
+        {settings.tagline.replace(', ', ' · ').toLowerCase().replace(/^\w/, (c) => c.toUpperCase())}
+        <br />
+        Port Townsend, Washington
+      </div>
+    </div>
+    <div class="statement">
+      {statement.map((p, i) => <p class:list={{ strong: i === statement.length - 1 }}>{p}</p>)}
+    </div>
+  </section>
+
+  <section class="artists">
+    <div class="section-head">
+      <h2 class="h2">The artists</h2>
+      <a href="/artists" class="text-link">All artists →</a>
+    </div>
+    <ul class="list">
+      {
+        artists.map((a) => (
+          <li>
+            <a href={`/artists/${a.id}`} class="row">
+              <span class="name">{a.data.name}</span>
+              <span class="meta">{a.data.medium}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="contact">
+    <div class="label muted">Contact</div>
+    <a href={`mailto:${settings.contactEmail}`} class="email">{settings.contactEmail}</a>
+    <div class="note">{settings.contactNote}</div>
+  </section>
+</Base>
+
+<style>
+  .band {
+    position: relative;
+    height: clamp(300px, 52vh, 560px);
+    overflow: hidden;
+    border-bottom: 1px solid var(--hairline);
+    background: var(--placeholder);
+  }
+  .band img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .caption {
+    position: absolute;
+    right: var(--pad-x);
+    bottom: 18px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--paper);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+  }
+
+  .about {
+    padding: clamp(48px, 7vw, 96px) var(--pad-x);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: clamp(28px, 5vw, 72px);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .heading {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .sub {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--clay);
+    line-height: 1.5;
+  }
+  .statement {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 620px;
+    font-size: clamp(18px, 1.7vw, 21px);
+    line-height: 1.55;
+  }
+  .statement .strong {
+    font-weight: 700;
+  }
+
+  .artists {
+    padding: clamp(36px, 5vw, 64px) var(--pad-x);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .artists .section-head {
+    margin-bottom: 24px;
+  }
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+    gap: 12px 32px;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 12px 0;
+    border-top: 1px solid var(--hairline);
+  }
+  .name {
+    font-weight: 700;
+    font-size: 17px;
+  }
+  .row .meta {
+    text-align: right;
+  }
+
+  .contact {
+    padding: clamp(36px, 5vw, 64px) var(--pad-x);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .contact .muted {
+    color: var(--muted);
+  }
+  .email {
+    font-size: 18px;
+    font-weight: 700;
+    border-bottom: 1.5px solid var(--clay);
+    padding-bottom: 2px;
+    align-self: flex-start;
+  }
+  .note {
+    font-size: 15px;
+    color: var(--muted);
+  }
+</style>

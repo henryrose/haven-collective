@@ -4,6 +4,7 @@ medium: ceramics & video
 order: 4
 portrait: ../../assets/media/group-2.jpg
 portraitPosition: 56% 35%
+portraitSize: 900% auto
 work:
   - title: Vessels
     meta: photo needed
