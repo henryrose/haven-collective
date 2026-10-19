@@ -2,7 +2,7 @@
 import { url } from '../lib/url';
 interface Props {
   lead: string;
-  sub: string;
+  sub?: string;
 }
 
 const { lead, sub } = Astro.props;
@@ -14,7 +14,7 @@ const leadHtml = lead
 
 <section class="section statement">
   <p class="lead" set:html={leadHtml} />
-  <p class="sub">{sub}</p>
+  {sub && <p class="sub">{sub}</p>}
   <a href={url('/about')} class="text-link">Read the collective statement</a>
 </section>
 

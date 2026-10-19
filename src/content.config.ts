@@ -86,7 +86,8 @@ const site = defineCollection({
       statement: z.array(z.string()).min(1),
       home: z.object({
         lead: z.string(),
-        sub: z.string(),
+        /** Optional muted line under the lead statement. */
+        sub: z.string().optional(),
         hero: z.object({ image: image(), position: cssPosition, caption: z.string() }),
       }),
       about: z.object({
