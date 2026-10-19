@@ -3,7 +3,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 
 export default defineConfig({
   // Served from the custom domain via GitHub Pages (public/CNAME). No base path needed.
-  site: 'https://haven-collective-pt.com',
+  site: 'https://havencollectivept.com',
   trailingSlash: 'never',
   fonts: [
     {

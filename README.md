@@ -17,7 +17,7 @@ npm run check    # type-check .astro files and content
 
 ## Deploy
 
-Pushes to `main` run `.github/workflows/deploy.yml`, which builds the site and publishes `dist/` to GitHub Pages at https://haven-collective-pt.com. The Pages source is "GitHub Actions" (Settings → Pages) and the custom domain comes from `public/CNAME`. DNS for the domain is managed at Squarespace Domains: A records on the apex pointing at GitHub Pages' four IPs and a `www` CNAME to `henryrose.github.io`. Internal links go through `src/lib/url.ts`, which prefixes Astro's `base` if one is ever set again.
+Pushes to `main` run `.github/workflows/deploy.yml`, which builds the site and publishes `dist/` to GitHub Pages at https://havencollectivept.com. The Pages source is "GitHub Actions" (Settings → Pages) and the custom domain comes from `public/CNAME`. DNS for the domain is managed at Squarespace Domains: A records on the apex pointing at GitHub Pages' four IPs and a `www` CNAME to `henryrose.github.io`. Internal links go through `src/lib/url.ts`, which prefixes Astro's `base` if one is ever set again.
 
 ## Content
 
