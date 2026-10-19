@@ -124,15 +124,16 @@ const { upcoming, past } = await getEventsByStatus();
   }
   .poster {
     position: relative;
-    aspect-ratio: 3 / 4;
     max-width: 360px;
     width: 100%;
     background: var(--placeholder);
   }
+  .poster:has(.placeholder) {
+    aspect-ratio: 3 / 4;
+  }
   .poster img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
   }
   .poster-placeholder {
     background: repeating-linear-gradient(45deg, var(--placeholder) 0 14px, var(--placeholder-stripe) 14px 28px);

@@ -259,7 +259,6 @@ const showGallery = !upcoming && data.photos.length > 0;
     gap: 22px;
   }
   .poster-mat {
-    aspect-ratio: 3 / 4;
     max-width: 420px;
     width: 100%;
     background: var(--paper);
@@ -267,10 +266,12 @@ const showGallery = !upcoming && data.photos.length > 0;
     padding: 12px;
     position: relative;
   }
+  .poster-mat:has(.placeholder) {
+    aspect-ratio: 3 / 4;
+  }
   .poster-mat img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
   }
   .poster-placeholder {
     position: static;
