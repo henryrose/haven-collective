@@ -1,0 +1,117 @@
+---
+import { Image } from 'astro:assets';
+import { formatDateRange, mosaicImages, type EventEntry } from '../lib/events';
+
+interface Props {
+  show: EventEntry;
+}
+
+const { show } = Astro.props;
+const [tall, ...small] = mosaicImages(show);
+const blurb = show.body?.split(/\n\s*\n/).filter(Boolean).at(-1)?.trim() ?? '';
+---
+
+<section class="section">
+  <div class="section-head">
+    <h2 class="h2">Past shows</h2>
+    <a href="/events" class="text-link">Archive →</a>
+  </div>
+  <div class="container">
+    <a href={`/events/${show.id}`} class="feature">
+      <div class="mosaic">
+        {
+          tall && (
+            <div class="cell tall">
+              <Image src={tall.image} alt="" widths={[480, 800, 1200]} sizes="(min-width: 760px) 40vw, 60vw" style={`object-position: ${tall.position}`} />
+            </div>
+          )
+        }
+        {
+          small.map((p) => (
+            <div class="cell">
+              <Image src={p.image} alt="" widths={[320, 640]} sizes="(min-width: 760px) 26vw, 40vw" style={`object-position: ${p.position}`} />
+            </div>
+          ))
+        }
+      </div>
+      <div class="card">
+        <div class="label date">{formatDateRange(show.data.startDate, show.data.endDate)}</div>
+        <div class="title">{show.data.title}</div>
+        <div class="venue">{show.data.venue} · {show.data.address.replace(/,\s*WA$/, '')}</div>
+        <p class="blurb">{blurb}</p>
+        <span class="text-link see">See the show →</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<style>
+  .container {
+    container-type: inline-size;
+  }
+  .feature {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    gap: var(--gap);
+    align-items: end;
+  }
+  .feature:hover {
+    color: var(--ink);
+  }
+  .mosaic {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    grid-auto-rows: minmax(120px, 22vw);
+    gap: 10px;
+  }
+  /* At six-column widths the mosaic takes two of the three columns. */
+  @container (min-width: 760px) {
+    .mosaic {
+      grid-column: span 2;
+    }
+  }
+  .cell {
+    position: relative;
+    overflow: hidden;
+    background: var(--placeholder);
+  }
+  .cell.tall {
+    grid-row: span 2;
+  }
+  .cell img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .card {
+    background: var(--paper);
+    padding: 22px 24px 24px;
+    box-shadow: 0 14px 30px -18px rgba(43, 37, 33, 0.4);
+  }
+  .date {
+    color: var(--muted);
+  }
+  .title {
+    font-size: clamp(26px, 3vw, 34px);
+    font-weight: 800;
+    line-height: 1.05;
+    margin: 8px 0 6px;
+    letter-spacing: -0.01em;
+  }
+  .venue {
+    font-size: 16px;
+    color: var(--muted);
+  }
+  .blurb {
+    margin-top: 14px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .see {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 14px;
+  }
+</style>

@@ -1,0 +1,98 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  artists: CollectionEntry<'artists'>[];
+}
+
+const { artists } = Astro.props;
+---
+
+<section class="section">
+  <div class="section-head">
+    <h2 class="h2">The six artists</h2>
+    <a href="/artists" class="text-link">All artists →</a>
+  </div>
+  <div class="grid-container">
+    <ul class="grid">
+      {
+        artists.map((artist) => (
+          <li>
+            <a href={`/artists/${artist.id}`} class="tile">
+              <div class="image">
+                {artist.data.keyWork ? (
+                  <Image
+                    src={artist.data.keyWork}
+                    alt={`Work by ${artist.data.name}`}
+                    widths={[320, 480, 800]}
+                    sizes="(min-width: 760px) 16vw, (min-width: 400px) 33vw, 50vw"
+                    style={`object-position: ${artist.data.keyWorkPosition}`}
+                  />
+                ) : (
+                  <div class="placeholder">key work photo</div>
+                )}
+              </div>
+              <div>
+                <div class="name">{artist.data.name}</div>
+                <div class="meta medium">{artist.data.medium}</div>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .grid-container {
+    container-type: inline-size;
+  }
+  /* Column counts must divide six so no row is left with an orphan. */
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--gap-tight);
+  }
+  @container (min-width: 400px) {
+    .grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @container (min-width: 760px) {
+    .grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+  }
+  .tile {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .tile:hover {
+    color: var(--ink);
+  }
+  .image {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--placeholder);
+  }
+  .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .name {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.2;
+  }
+  .medium {
+    margin-top: 3px;
+  }
+</style>

@@ -1,0 +1,50 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  settings: CollectionEntry<'site'>['data'];
+}
+
+const { settings } = Astro.props;
+---
+
+<footer class="site-footer">
+  <div class="identity">
+    <span class="wordmark">{settings.name}</span>
+    <span>{settings.tagline} · {settings.location}</span>
+  </div>
+  <nav aria-label="Footer">
+    <a href="/about">Contact</a>
+  </nav>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: auto;
+    padding: 28px var(--pad-x) 36px;
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .identity {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .wordmark {
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    font-size: 13px;
+  }
+  nav {
+    display: flex;
+    gap: 22px;
+    font-weight: 500;
+  }
+</style>

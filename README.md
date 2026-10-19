@@ -1,7 +1,41 @@
 # Haven Collective
 
-Materials for the Haven Collective show (August 22, 2026).
+Public website for Haven Collective: six artists in Port Townsend, WA, connected by motherhood.
+Built with [Astro](https://astro.build) and content collections so the artists can edit content as Markdown without touching code.
 
-- `context/CONTEXT.md` — show wording, group bio, artist bios, poster link
-- `context/artist-work/` — images of the artists' work
-- `context/show-photos-2026-08-22/` — photos from the show
+## Develop
+
+Requires Node 22+ (Node 24 via nvm works).
+
+```sh
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # static output in dist/
+npm run preview  # serve dist/
+npm run check    # type-check .astro files and content
+```
+
+## Content
+
+All site content lives in `src/content/` and is validated by the schemas in `src/content.config.ts`.
+
+| Folder | One file per | Notes |
+| --- | --- | --- |
+| `artists/*.md` | artist | Frontmatter: name, medium, order, key work image + crop, portrait, `work[]`. Body: bio paragraphs. Filename is the URL slug. |
+| `events/*.md` | show | Frontmatter: title, start/end dates, venue, reception, poster, hero, `featured[]` (mosaic), `photos[]` with captions and `emphasis` (none/tall/wide), participating artists. Body: blurb paragraphs. Status (upcoming/past) is derived from `endDate` at build time. |
+| `site/settings.json` | site | Name, location, tagline, contact email, collective statement, Home hero image and lead copy. |
+
+Image paths in content are relative to the content file (for example `../../assets/media/spoons.jpg`). Astro generates WebP `srcset` variants at build time, so drop full-size photos into `src/assets/media/`.
+
+## Layout
+
+- `src/layouts/Base.astro` — document shell, self-hosted fonts (Karla, Courier Prime), header and footer
+- `src/components/` — Home page sections: `Hero` (scroll parallax, disabled under reduced motion), `Statement`, `ArtistGrid`, `PastShows`
+- `src/lib/events.ts` — upcoming/past split, date formatting, mosaic image selection
+- `src/styles/global.css` — design tokens from the handoff
+
+## Design reference
+
+`design_handoff_haven_collective_site/` holds the handoff README, HTML design references for every page, seed data, and web-sized media. `context/` holds the original photos and show wording.
+
+Pages built so far: Home. Still to build: Artists index, Artist page, Events index, Event page, About.

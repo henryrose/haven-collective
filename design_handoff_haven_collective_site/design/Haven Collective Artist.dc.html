@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,700;0,800;1,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet"><style>body{margin:0;background:#f3ede3;color:#2b2521;font-family:'Karla',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:#2b2521;text-decoration:none}a:hover{color:#a9694b}*{box-sizing:border-box}</style></helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+<header style="display:flex;justify-content:space-between;align-items:center;gap:24px;padding:22px clamp(20px,4vw,56px);border-bottom:1px solid #d9cfc0;flex-wrap:wrap">
+  <a href="Haven%20Collective%20Home.dc.html" style="display:flex;align-items:baseline;gap:14px"><span style="font-weight:800;font-size:19px;letter-spacing:.12em;text-transform:uppercase">Haven Collective</span><span style="font-family:'Courier Prime',monospace;font-size:12px;color:#6f655c">Port Townsend, WA</span></a>
+  <nav style="display:flex;gap:28px;font-size:15px;font-weight:500"><a href="Haven%20Collective%20Artists.dc.html" style="border-bottom:1.5px solid #a9694b;padding-bottom:2px">Artists</a><a href="Haven%20Collective%20Events.dc.html">Events</a><a href="Haven%20Collective%20About.dc.html">About</a></nav>
+</header>
+
+<section style="position:relative;height:clamp(260px,38vh,440px);overflow:hidden;border-bottom:1px solid #d9cfc0;background-color:#e6ddcf;background-size:cover;background-position:{{ heroPos }};background-image:url({{ heroImg }})">
+  <sc-if value="{{ heroPlaceholder }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,#e6ddcf 0 14px,#efe7da 14px 28px);display:flex;align-items:center;justify-content:center;font-family:'Courier Prime',monospace;font-size:13px;color:#6f655c">key work, wide crop</div></sc-if>
+</section>
+
+<section style="padding:clamp(36px,5vw,64px) clamp(20px,4vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(28px,5vw,72px);border-bottom:1px solid #d9cfc0">
+  <div style="display:flex;flex-direction:column;gap:18px">
+    <a href="Haven%20Collective%20Artists.dc.html" style="font-family:'Courier Prime',monospace;font-size:12px;color:#6f655c">← All artists</a>
+    <div style="display:flex;align-items:center;gap:16px">
+      <div style="width:64px;height:64px;border-radius:50%;flex:none;background:url(media/group-2.jpg) {{ portrait }}/900% auto"></div>
+      <div><h1 style="margin:0;font-size:clamp(32px,4.5vw,52px);line-height:.98;font-weight:800;letter-spacing:-.02em">{{ name }}</h1><div style="font-family:'Courier Prime',monospace;font-size:13px;color:#a9694b;margin-top:8px">{{ medium }}</div></div>
+    </div>
+    
+  </div>
+  <div style="display:flex;flex-direction:column;gap:18px;max-width:620px">
+    <sc-for list="{{ bio }}" as="p" hint-placeholder-count="2"><p style="margin:0;font-size:clamp(17px,1.6vw,20px);line-height:1.55;text-wrap:pretty">{{ p }}</p></sc-for>
+  </div>
+</section>
+
+<section style="padding:clamp(36px,5vw,64px) clamp(20px,4vw,56px);border-bottom:1px solid #d9cfc0">
+  <h2 style="margin:0 0 24px;font-size:clamp(22px,2.6vw,30px);font-weight:800;letter-spacing:-.01em">Work</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:clamp(16px,2.5vw,28px)">
+    <sc-for list="{{ work }}" as="w" hint-placeholder-count="3">
+      <a href="#" style="display:flex;flex-direction:column;gap:10px">
+        <div style="aspect-ratio:4/5;background-color:#e6ddcf;background-repeat:no-repeat;background-size:{{ w.size }};background-position:{{ w.pos }};background-image:url({{ w.img }});position:relative;overflow:hidden">
+          <sc-if value="{{ w.placeholder }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,#e6ddcf 0 10px,#efe7da 10px 20px);display:flex;align-items:center;justify-content:center;padding:12px;text-align:center;font-family:'Courier Prime',monospace;font-size:12px;color:#6f655c">{{ w.label }}</div></sc-if>
+        </div>
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:baseline"><span style="font-weight:700;font-size:15px">{{ w.title }}</span><span style="font-family:'Courier Prime',monospace;font-size:12px;color:#6f655c;text-align:right">{{ w.meta }}</span></div>
+      </a>
+    </sc-for>
+  </div>
+</section>
+
+<section style="padding:clamp(36px,5vw,64px) clamp(20px,4vw,56px);border-bottom:1px solid #d9cfc0;display:flex;flex-direction:column;gap:20px">
+  <h2 style="margin:0;font-size:clamp(22px,2.6vw,30px);font-weight:800;letter-spacing:-.01em">In shows</h2>
+  <a href="Haven%20Collective%20Event.dc.html#mothers-makers-2026" style="display:flex;gap:18px;align-items:center;max-width:560px">
+    <div style="width:120px;height:80px;flex:none;background:url(media/install-hanging.jpg) 40% 45%/cover"></div>
+    <div><div style="font-weight:800;font-size:20px;letter-spacing:-.01em">Mothers Makers</div><div style="font-family:'Courier Prime',monospace;font-size:12px;color:#6f655c;margin-top:4px">August 22–23, 2026 · Baird Studio</div></div>
+  </a>
+</section>
+
+<section style="padding:28px clamp(20px,4vw,56px);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:15px;font-weight:700">
+  <a href="{{ prevHref }}">← {{ prevName }}</a>
+  <a href="{{ nextHref }}">{{ nextName }} →</a>
+</section>
+
+<footer style="margin-top:auto;padding:28px clamp(20px,4vw,56px) 36px;border-top:1px solid #d9cfc0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14px;color:#6f655c">
+  <div style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#2b2521;font-size:13px">Haven Collective</span><span>Six artists, connected by motherhood · Port Townsend, WA</span></div>
+  <div style="display:flex;gap:22px;font-weight:500"><a href="Haven%20Collective%20About.dc.html">Contact</a></div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;artist&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Morgan Terry&quot;,&quot;options&quot;:[&quot;Amanda Rose&quot;,&quot;Sarah Aubin&quot;,&quot;Morgan Terry&quot;,&quot;Jaimie Baird&quot;,&quot;Courtney Astrea Stroming&quot;,&quot;Ali Luis Yates&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Preview&quot;}}">
+class Component extends DCLogic {
+  state = { artists: [], hash: (location.hash || '').slice(1) };
+  componentDidMount() {
+    import('./haven-data.js').then(m => this.setState({ artists: m.artists }));
+    this.onHash = () => this.setState({ hash: location.hash.slice(1) });
+    window.addEventListener('hashchange', this.onHash);
+  }
+  componentWillUnmount() { window.removeEventListener('hashchange', this.onHash); }
+  renderVals() {
+    const list = this.state.artists;
+    if (!list.length) return { bio: [], work: [], name: '', medium: '' };
+    const byName = this.props.artist ? list.findIndex(a => a.name === this.props.artist) : -1;
+    const byHash = list.findIndex(a => a.slug === this.state.hash);
+    const i = byName >= 0 ? byName : byHash >= 0 ? byHash : 2;
+    const a = list[i], prev = list[(i + list.length - 1) % list.length], next = list[(i + 1) % list.length];
+    const href = s => 'Haven%20Collective%20Artist.dc.html#' + s;
+    return {
+      name: a.name, medium: a.medium, bio: a.bio, portrait: a.portrait,
+      heroImg: a.img, heroPos: a.imgPos || 'center', heroPlaceholder: !a.img,
+      work: a.work.map(w => ({ title: w.title, meta: w.meta, img: w.img || '', pos: w.pos || 'center', size: w.size || 'cover', placeholder: !w.img, label: w.video ? '▶ video embed' : 'work photo' })),
+      prevHref: href(prev.slug), prevName: prev.name, nextHref: href(next.slug), nextName: next.name
+    };
+  }
+}
+</script>
+</body>
+</html>

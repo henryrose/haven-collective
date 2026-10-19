@@ -1,0 +1,21 @@
+{
+  "name": "Haven Collective",
+  "location": "Port Townsend, WA",
+  "tagline": "Six artists, connected by motherhood",
+  "contactEmail": "amandafmrose@gmail.com",
+  "contactNote": "Press, venues, and collaborations.",
+  "statement": [
+    "We met in the tender, disorienting early months of new parenthood—a time when identities shift and creative lives can go quiet. This show is our refusal to let them.",
+    "The six of us have continued making work through feedings and nap windows, through exhaustion and wonder, through the profound strangeness of watching a new person become themselves while you become something new too. Our practices look different from one another, but we return again and again to the same terrain: the domestic as a site of meaning, the body as a keeper of time, the self that persists and changes beneath and alongside the role of mother.",
+    "We are artists who are also mothers. We are mothers who are also, still, artists. This show is about refusing to choose."
+  ],
+  "home": {
+    "lead": "We are artists who are also mothers. We are mothers who are also, *still*, artists. This is about refusing to choose.",
+    "sub": "Six artists who met in the early months of new parenthood, making work through feedings and nap windows in Port Townsend, Washington.",
+    "hero": {
+      "image": "../../assets/media/install-plinth.jpg",
+      "position": "center 42%",
+      "caption": "Mothers Makers, installed · Baird Studio, Aug 2026"
+    }
+  }
+}

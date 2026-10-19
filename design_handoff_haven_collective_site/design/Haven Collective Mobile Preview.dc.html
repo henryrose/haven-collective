@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><meta name="design_doc_mode" content="canvas"><style>body{margin:0;background:#e9e3d8;font-family:system-ui,sans-serif;color:#2b2521}a{color:#2b2521}a:hover{color:#a9694b}</style></helmet>
+<div style="padding:32px;display:flex;gap:28px;flex-wrap:wrap;align-items:flex-start">
+  <sc-for list="{{ pages }}" as="p" hint-placeholder-count="6">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="font:600 12px/1 ui-monospace,Menlo,monospace;color:#6f655c">{{ p.label }} · 390px</div>
+      <div style="width:390px;height:844px;border-radius:28px;border:8px solid #2b2521;overflow:hidden;background:#f3ede3;box-shadow:0 20px 50px -20px rgba(0,0,0,.4)"><iframe src="{{ p.src }}" style="width:390px;height:844px;border:0;display:block"></iframe></div>
+    </div>
+  </sc-for>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    return { pages: [
+      { label: 'Home', src: 'Haven%20Collective%20Home.dc.html' },
+      { label: 'Artists', src: 'Haven%20Collective%20Artists.dc.html' },
+      { label: 'Artist', src: 'Haven%20Collective%20Artist.dc.html#morgan-terry' },
+      { label: 'Events', src: 'Haven%20Collective%20Events.dc.html' },
+      { label: 'Event (past)', src: 'Haven%20Collective%20Event.dc.html#mothers-makers-2026' },
+      { label: 'About', src: 'Haven%20Collective%20About.dc.html' }
+    ] };
+  }
+}
+</script>
+</body>
+</html>

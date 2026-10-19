@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,500;0,700;0,800;1,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet"><style>body{margin:0;background:#f3ede3;color:#2b2521;font-family:'Karla',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:#2b2521;text-decoration:none}a:hover{color:#a9694b}*{box-sizing:border-box}</style></helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+<header style="display:flex;justify-content:space-between;align-items:center;gap:24px;padding:22px clamp(20px,4vw,56px);border-bottom:1px solid #d9cfc0;flex-wrap:wrap">
+  <a href="Haven%20Collective%20Home.dc.html" style="display:flex;align-items:baseline;gap:14px"><span style="font-weight:800;font-size:19px;letter-spacing:.12em;text-transform:uppercase">Haven Collective</span><span style="font-family:'Courier Prime',monospace;font-size:12px;color:#6f655c">Port Townsend, WA</span></a>
+  <nav style="display:flex;gap:28px;font-size:15px;font-weight:500"><a href="Haven%20Collective%20Artists.dc.html" style="border-bottom:1.5px solid #a9694b;padding-bottom:2px">Artists</a><a href="Haven%20Collective%20Events.dc.html">Events</a><a href="Haven%20Collective%20About.dc.html">About</a></nav>
+</header>
+
+<section style="padding:clamp(40px,6vw,72px) clamp(20px,4vw,56px) clamp(24px,3vw,36px);display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap">
+  <h1 style="margin:0;font-size:clamp(40px,6vw,72px);line-height:.95;font-weight:800;letter-spacing:-.02em">Artists</h1>
+  <p style="margin:0;max-width:460px;font-size:17px;line-height:1.5;color:#6f655c;text-wrap:pretty">Six practices that look different from one another, returning again and again to the same terrain.</p>
+</section>
+
+<section style="padding:0 clamp(20px,4vw,56px) clamp(56px,8vw,96px)">
+  <div ref="{{ gridRef }}" style="display:grid;grid-template-columns:repeat({{ cols }},minmax(0,1fr));gap:clamp(20px,3vw,40px) clamp(16px,2.5vw,32px)">
+    <sc-for list="{{ artists }}" as="a" hint-placeholder-count="6">
+      <a href="{{ a.href }}" style="display:flex;flex-direction:column;gap:14px">
+        <div style="aspect-ratio:4/5;background-color:#e6ddcf;background-size:cover;background-position:center;background-image:url({{ a.img }});position:relative;overflow:hidden">
+          <sc-if value="{{ a.placeholder }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,#e6ddcf 0 10px,#efe7da 10px 20px);display:flex;align-items:center;justify-content:center;padding:12px;text-align:center;font-family:'Courier Prime',monospace;font-size:12px;color:#6f655c">key work photo</div></sc-if>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap"><span style="font-weight:800;font-size:22px;line-height:1.1;letter-spacing:-.01em">{{ a.name }}</span><span style="font-family:'Courier Prime',monospace;font-size:12px;color:#6f655c">{{ a.medium }}</span></div>
+          <p style="margin:0;font-size:15px;line-height:1.5;color:#6f655c;text-wrap:pretty">{{ a.excerpt }}</p>
+        </div>
+      </a>
+    </sc-for>
+  </div>
+</section>
+
+<footer style="margin-top:auto;padding:28px clamp(20px,4vw,56px) 36px;border-top:1px solid #d9cfc0;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14px;color:#6f655c">
+  <div style="display:flex;flex-direction:column;gap:4px"><span style="font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#2b2521;font-size:13px">Haven Collective</span><span>Six artists, connected by motherhood · Port Townsend, WA</span></div>
+  <div style="display:flex;gap:22px;font-weight:500"><a href="Haven%20Collective%20About.dc.html">Contact</a></div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { cols: 3, artists: [] };
+  gridRef = React.createRef();
+  componentDidMount() {
+    import('./haven-data.js').then(m => this.setState({ artists: m.artists }));
+    this.ro = new ResizeObserver(([e]) => {
+      const w = e.contentRect.width;
+      const cols = w >= 760 ? 3 : w >= 440 ? 2 : 1;
+      if (cols !== this.state.cols) this.setState({ cols });
+    });
+    if (this.gridRef.current) this.ro.observe(this.gridRef.current);
+  }
+  componentWillUnmount() { this.ro && this.ro.disconnect(); }
+  renderVals() {
+    return {
+      gridRef: this.gridRef,
+      cols: this.state.cols,
+      artists: this.state.artists.map(a => ({
+        name: a.name, medium: a.medium, img: a.img, placeholder: !a.img,
+        href: 'Haven%20Collective%20Artist.dc.html#' + a.slug,
+        excerpt: a.bio[0].split('. ')[0].replace(/\.$/, '') + '.'
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>
