@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 
@@ -12,14 +13,14 @@ const { artists } = Astro.props;
 <section class="section">
   <div class="section-head">
     <h2 class="h2">The six artists</h2>
-    <a href="/artists" class="text-link">All artists →</a>
+    <a href={url('/artists')} class="text-link">All artists →</a>
   </div>
   <div class="grid-container">
     <ul class="grid">
       {
         artists.map((artist) => (
           <li>
-            <a href={`/artists/${artist.id}`} class="tile">
+            <a href={url(`/artists/${artist.id}`)} class="tile">
               <div class="image">
                 {artist.data.keyWork ? (
                   <Image

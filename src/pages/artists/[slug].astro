@@ -1,4 +1,5 @@
 ---
+import { url } from '../../lib/url';
 import { Image, getImage } from 'astro:assets';
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
@@ -54,7 +55,7 @@ const showThumb = (e: EventEntry) => e.data.hero ?? e.data.photos[0];
 
   <section class="intro">
     <div class="identity">
-      <a href="/artists" class="meta back">← All artists</a>
+      <a href={url('/artists')} class="meta back">← All artists</a>
       <div class="name-block">
         <div
           class="portrait"
@@ -134,7 +135,7 @@ const showThumb = (e: EventEntry) => e.data.hero ?? e.data.photos[0];
         {shows.map((e) => {
           const thumb = showThumb(e);
           return (
-            <a href={`/events/${e.id}`} class="show">
+            <a href={url(`/events/${e.id}`)} class="show">
               <div class="thumb">
                 {thumb && <Image src={thumb.image} alt="" width={240} height={160} style={`object-position: ${thumb.position}`} />}
               </div>
@@ -152,8 +153,8 @@ const showThumb = (e: EventEntry) => e.data.hero ?? e.data.photos[0];
   }
 
   <nav class="prev-next" aria-label="Other artists">
-    <a href={`/artists/${prev.id}`}>← {prev.data.name}</a>
-    <a href={`/artists/${next.id}`}>{next.data.name} →</a>
+    <a href={url(`/artists/${prev.id}`)}>← {prev.data.name}</a>
+    <a href={url(`/artists/${next.id}`)}>{next.data.name} →</a>
   </nav>
 
   <Lightbox />

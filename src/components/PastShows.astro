@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import EventMosaic from './EventMosaic.astro';
 import { formatDateRange, shortAddress, type EventEntry } from '../lib/events';
 import { paragraphs } from '../lib/text';
@@ -14,10 +15,10 @@ const blurb = paragraphs(show.body).at(-1) ?? '';
 <section class="section">
   <div class="section-head">
     <h2 class="h2">Past shows</h2>
-    <a href="/events" class="text-link">Archive →</a>
+    <a href={url('/events')} class="text-link">Archive →</a>
   </div>
   <div class="container">
-    <a href={`/events/${show.id}`} class="feature">
+    <a href={url(`/events/${show.id}`)} class="feature">
       <EventMosaic event={show} class="mosaic" />
       <div class="card">
         <div class="label date">{formatDateRange(show.data.startDate, show.data.endDate)}</div>

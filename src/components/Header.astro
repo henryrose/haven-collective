@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import type { CollectionEntry } from 'astro:content';
 
 interface Props {
@@ -12,18 +13,18 @@ const nav = [
   { href: '/events', label: 'Events' },
   { href: '/about', label: 'About' },
 ];
-const isActive = (href: string) => currentPath === href || currentPath.startsWith(href + '/');
+const isActive = (href: string) => currentPath === url(href) || currentPath.startsWith(url(href) + '/');
 ---
 
 <header class="site-header">
-  <a href="/" class="brand">
+  <a href={url('/')} class="brand">
     <span class="wordmark">{settings.name}</span>
     <span class="location">{settings.location}</span>
   </a>
   <nav aria-label="Primary">
     {
       nav.map((item) => (
-        <a href={item.href} class:list={{ active: isActive(item.href) }} aria-current={isActive(item.href) ? 'page' : undefined}>
+        <a href={url(item.href)} class:list={{ active: isActive(item.href) }} aria-current={isActive(item.href) ? 'page' : undefined}>
           {item.label}
         </a>
       ))

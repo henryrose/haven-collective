@@ -1,4 +1,5 @@
 ---
+import { url } from '../../lib/url';
 import { Image } from 'astro:assets';
 import { getCollection, getEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
@@ -20,7 +21,7 @@ const artists = (await getCollection('artists')).sort((a, b) => a.data.order - b
         {
           artists.map((artist) => (
             <li>
-              <a href={`/artists/${artist.id}`} class="tile">
+              <a href={url(`/artists/${artist.id}`)} class="tile">
                 <div class="image">
                   {artist.data.keyWork ? (
                     <Image

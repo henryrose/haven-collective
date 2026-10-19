@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { formatDateRange, type EventEntry } from '../lib/events';
@@ -43,7 +44,7 @@ const venueLine = show ? `${show.data.venue} · ${show.data.address.replace(/,\s
           <br />
           <span class="venue">{venueLine}</span>
         </div>
-        <a href={`/events/${show.id}`} class="button">
+        <a href={url(`/events/${show.id}`)} class="button">
           Show details →
         </a>
       </div>

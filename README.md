@@ -15,6 +15,10 @@ npm run preview  # serve dist/
 npm run check    # type-check .astro files and content
 ```
 
+## Deploy
+
+Pushes to `main` run `.github/workflows/deploy.yml`, which builds the site and publishes `dist/` to GitHub Pages at https://henryrose.github.io/haven-collective/. The Pages source must be set to "GitHub Actions" in the repo settings (Settings → Pages). Internal links go through `src/lib/url.ts` so they carry the `/haven-collective` base path; when the site moves to a custom domain, set `site` and remove `base` in `astro.config.mjs`.
+
 ## Content
 
 All site content lives in `src/content/` and is validated by the schemas in `src/content.config.ts`.

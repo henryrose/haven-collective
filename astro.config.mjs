@@ -2,7 +2,9 @@
 import { defineConfig, fontProviders } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://havencollective.art',
+  // GitHub Pages project site. Switch to the custom domain and drop `base` when one exists.
+  site: 'https://henryrose.github.io',
+  base: '/haven-collective',
   trailingSlash: 'never',
   fonts: [
     {

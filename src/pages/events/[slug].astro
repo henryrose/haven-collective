@@ -1,4 +1,5 @@
 ---
+import { url } from '../../lib/url';
 import { Image } from 'astro:assets';
 import { getCollection, getEntries, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
@@ -37,7 +38,7 @@ const showGallery = !upcoming && data.photos.length > 0;
 
   <section class="details">
     <div class="left">
-      <a href="/events" class="meta back">← All events</a>
+      <a href={url('/events')} class="meta back">← All events</a>
       <div class="label eyebrow" class:list={{ clay: upcoming, muted: !upcoming }}>
         <span class="dot" />
         {badge}
@@ -82,7 +83,7 @@ const showGallery = !upcoming && data.photos.length > 0;
               </a>
             )}
             {upcoming && (
-              <a href={`/events/${event.id}.ics`} class="button" download>
+              <a href={url(`/events/${event.id}.ics`)} class="button" download>
                 Add to calendar
               </a>
             )}
@@ -134,7 +135,7 @@ const showGallery = !upcoming && data.photos.length > 0;
         <ul class="artist-grid">
           {artists.map((a) => (
             <li>
-              <a href={`/artists/${a.id}`} class="artist">
+              <a href={url(`/artists/${a.id}`)} class="artist">
                 <div class="square">
                   {a.data.keyWork ? (
                     <Image src={a.data.keyWork} alt="" widths={[200, 400]} sizes="(min-width: 760px) 16vw, 50vw" style={`object-position: ${a.data.keyWorkPosition}`} />
@@ -155,8 +156,8 @@ const showGallery = !upcoming && data.photos.length > 0;
   }
 
   <nav class="prev-next" aria-label="Other events">
-    {earlier ? <a href={`/events/${earlier.id}`}>← Previous: {earlier.data.title}</a> : <span />}
-    {later && <a href={`/events/${later.id}`}>Next: {later.data.title} →</a>}
+    {earlier ? <a href={url(`/events/${earlier.id}`)}>← Previous: {earlier.data.title}</a> : <span />}
+    {later && <a href={url(`/events/${later.id}`)}>Next: {later.data.title} →</a>}
   </nav>
 </Base>
 
