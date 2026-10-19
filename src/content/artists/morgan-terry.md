@@ -5,8 +5,8 @@ order: 3
 keyWork: ../../assets/media/quilt-detail.jpg
 keyWorkPosition: center 30%
 portrait: ../../assets/media/group-2.jpg
-portraitPosition: 36% 38%
-portraitSize: 900% auto
+portraitPosition: 47% 30%
+portraitSize: 1300% auto
 work:
   - title: Portrait (gold)
     meta: stitched satin quilt, 2026
