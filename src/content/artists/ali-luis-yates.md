@@ -2,16 +2,12 @@
 name: Ali Luis Yates
 medium: fiber arts
 order: 6
-keyWork: ../../assets/media/ali-1.jpg
-keyWorkPosition: center
+keyWork: ../../assets/media/ali-ruffle-dress.jpg
+keyWorkPosition: center 35%
 portrait: ../../assets/media/group-2.jpg
 portraitPosition: 56% 35%
 portraitSize: 900% auto
 work:
-  - title: Granny squares
-    meta: crochet, 2026
-    image: ../../assets/media/ali-1.jpg
-    position: center
   - title: Ruffled dress
     meta: sewn garment, 2026
     image: ../../assets/media/ali-ruffle-dress.jpg
