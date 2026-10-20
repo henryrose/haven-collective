@@ -38,6 +38,4 @@ work:
     position: 72% 30%
 ---
 
-Amanda Rose is a painter and textile artist. Her shibori-dyed linen work mirrors the discomfort and beauty of identity in transformation — cloth bound, compressed, and released, the final pattern never fully known until it opens.
-
-The process demands a surrender of control she is still learning to offer, both at the dyeing table and in the unfolding of early motherhood. In the compression and release of resist dyeing she finds a language for this particular season: the pressure that brings clarity, the letting go that reveals what was always taking shape.
+Amanda Rose is a painter, textile artist, and ceramicist. Her work returns again and again to the same inquiry: what happens in the space between holding on and letting go. Working intuitively across mediums, she finds language for transformation — the pressure that brings clarity, the release that reveals what was always taking shape. Across every practice, she is learning to surrender control to the process, and to trust what emerges.
