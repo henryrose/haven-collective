@@ -9,7 +9,7 @@ reception: Opening reception · Saturday, November 7 · 5–8pm
 poster: ../../assets/media/haven-collective-2026-poster.png
 artists:
   - amanda-rose
-  - sarah-aubin
+  - sarah-wright-aubin
   - morgan-terry
   - jaimie-baird
   - courtney-astrea-stroming

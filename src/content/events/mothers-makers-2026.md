@@ -23,7 +23,7 @@ photos:
     caption: Protea Pelvis on the plinth; Morgan Terry’s quilts behind
   - image: ../../assets/media/install-sarah-wall.jpg
     position: 62% 50%
-    caption: Sarah Aubin’s wall
+    caption: Sarah Wright Aubin’s wall
   - image: ../../assets/media/install-hanging.jpg
     position: 40% 50%
     caption: Hanging the quilts
@@ -36,7 +36,7 @@ photos:
     caption: Stitched satin portraits
 artists:
   - amanda-rose
-  - sarah-aubin
+  - sarah-wright-aubin
   - morgan-terry
   - jaimie-baird
   - courtney-astrea-stroming

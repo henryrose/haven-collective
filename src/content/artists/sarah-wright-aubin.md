@@ -1,5 +1,5 @@
 ---
-name: Sarah Aubin
+name: Sarah Wright Aubin
 medium: photography
 order: 2
 keyWork: ../../assets/media/sarah-hand.jpg
