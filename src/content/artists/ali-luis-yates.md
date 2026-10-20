@@ -5,8 +5,8 @@ order: 6
 keyWork: ../../assets/media/ali-ruffle-dress.jpg
 keyWorkPosition: center 35%
 portrait: ../../assets/media/group-2.jpg
-portraitPosition: 56% 35%
-portraitSize: 900% auto
+portraitPosition: 35% 40%
+portraitSize: 1300% auto
 work:
   - title: Ruffled dress
     meta: sewn garment, 2026

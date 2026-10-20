@@ -5,8 +5,8 @@ order: 4
 keyWork: ../../assets/media/jaimie-vessels.jpg
 keyWorkPosition: 50% 62%
 portrait: ../../assets/media/group-2.jpg
-portraitPosition: 56% 35%
-portraitSize: 900% auto
+portraitPosition: 53% 45%
+portraitSize: 1300% auto
 work:
   - title: Vessels
     meta: stoneware and terracotta, 2026
