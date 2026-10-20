@@ -43,3 +43,7 @@ Courtney Astrea Stroming explores her matrescence journey by investigating her e
 
 
 
+Ali Luis Ytes Bio:
+Ali is a third generation fiber artist and garment sewist. Inspired by the makers who precede her, Ali explores identity, heartbreak, the gendered boundaries of art versus craft, and what remains in the wake of life’s excruciating, joyous, and revelatory changes.
+
+Ali’s recent work is a meditation on boldness and bravery—the refusal to abide by the limits of what is acceptable to express as a woman/mother/holder of softness and care. Her pieces represent an unapologetic baring of the tender parts we hide in preservation of the comfort of others.

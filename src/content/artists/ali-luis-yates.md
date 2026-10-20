@@ -12,10 +12,28 @@ work:
     meta: crochet, 2026
     image: ../../assets/media/ali-1.jpg
     position: center
-  - title: Work
-    meta: photo needed
-  - title: Work
-    meta: photo needed
+  - title: Ruffled dress
+    meta: sewn garment, 2026
+    image: ../../assets/media/ali-ruffle-dress.jpg
+    position: center 40%
+  - title: Slip dress
+    meta: sewn garment, 2026
+    image: ../../assets/media/ali-slip-dress.jpg
+    position: center 40%
+  - title: Lavender dress
+    meta: sewn garment, 2026
+    image: ../../assets/media/ali-lavender-dress.jpg
+    position: center 40%
+  - title: Tiered skirt
+    meta: sewn garment, 2026
+    image: ../../assets/media/ali-tiered-skirt.jpg
+    position: center 40%
+  - title: Gathered top
+    meta: sewn garment, 2026
+    image: ../../assets/media/ali-gathered-top.jpg
+    position: center 40%
 ---
 
-Artist statement coming soon.
+Ali is a third generation fiber artist and garment sewist. Inspired by the makers who precede her, Ali explores identity, heartbreak, the gendered boundaries of art versus craft, and what remains in the wake of life's excruciating, joyous, and revelatory changes.
+
+Ali's recent work is a meditation on boldness and bravery — the refusal to abide by the limits of what is acceptable to express as a woman/mother/holder of softness and care. Her pieces represent an unapologetic baring of the tender parts we hide in preservation of the comfort of others.
