@@ -3,7 +3,6 @@ import { url } from '../../lib/url';
 import { Image } from 'astro:assets';
 import { getCollection, getEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { firstSentence } from '../../lib/text';
 
 const settings = (await getEntry('site', 'settings'))!.data;
 const artists = (await getCollection('artists')).sort((a, b) => a.data.order - b.data.order);
@@ -40,7 +39,6 @@ const artists = (await getCollection('artists')).sort((a, b) => a.data.order - b
                     <span class="name">{artist.data.name}</span>
                     <span class="meta">{artist.data.medium}</span>
                   </div>
-                  <p class="excerpt">{firstSentence(artist.body)}</p>
                 </div>
               </a>
             </li>
@@ -126,10 +124,5 @@ const artists = (await getCollection('artists')).sort((a, b) => a.data.order - b
     font-size: 22px;
     line-height: 1.1;
     letter-spacing: -0.01em;
-  }
-  .excerpt {
-    font-size: 15px;
-    line-height: 1.5;
-    color: var(--muted);
   }
 </style>
