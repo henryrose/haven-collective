@@ -46,7 +46,7 @@ Define these as content types in the CMS.
 - photos[]: { image, caption, emphasis: none | tall | wide }
 - artists[]: references
 
-**Site settings**: contact email (`amandafmrose@gmail.com`), location string ("Port Townsend, WA"), collective statement paragraphs.
+**Site settings**: contact email (`info@havencollectivept.com`), location string ("Port Townsend, WA"), collective statement paragraphs.
 
 **Seed data** is in `design/haven-data.js` (artists, bios, events, photo captions). Current facts: six artists — Amanda Rose, Sarah Aubin, Morgan Terry, Jaimie Baird, Courtney Astrea Stroming, Ali Luis Yates (statement pending). Past show: "Mothers Makers", Aug 22–23 2026, Baird Studio. Upcoming: "Haven Collective", opens Nov 7 2026, Black Cat Pilates.
 
@@ -127,7 +127,7 @@ Two variants from one template.
 - Full-bleed group photo band, height `clamp(300px,52vh,560px)`, position `center 42%`, bottom-right caption "Mothers Makers · Baird Studio · August 2026".
 - Two columns: left h1 "About the collective" + Courier clay sub-line ("Six artists · connected by motherhood / Port Townsend, Washington"); right the three statement paragraphs at `clamp(18px,1.7vw,21px)`, final paragraph bold.
 - **The artists**: h2 + "All artists →"; `auto-fill, minmax(min(100%,260px),1fr)` list of hairline-topped rows: name 700 17px left, medium Courier right. Each links to the artist page.
-- **Contact**: Courier eyebrow "Contact", `mailto:amandafmrose@gmail.com` as a bold clay-underlined link, helper "Press, venues, and collaborations." No Instagram or newsletter — intentionally removed.
+- **Contact**: Courier eyebrow "Contact", `mailto:info@havencollectivept.com` as a bold clay-underlined link, helper "Press, venues, and collaborations." No Instagram or newsletter — intentionally removed.
 
 ## Interactions & behavior
 - Links: text → clay on hover; buttons invert on hover. No other hover effects on tiles (consider a subtle image `scale(1.02)` over 400ms if desired).
